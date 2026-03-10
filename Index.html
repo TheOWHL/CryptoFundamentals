@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>加密貨幣基礎簡報</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Urbanist:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* 1. THE SETUP */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #121212;
+            display: grid;
+            gap: 20px;
+            grid-template-columns: 1fr;
+            margin: 0;
+            min-height: 100vh;
+            padding: 20px 0;
+            place-items: center;
+        }
+
+        .slide-container {
+            align-items: flex-start;
+            background-color: #050505;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            display: flex;
+            flex-direction: column;
+            font-family: 'Urbanist', 'Noto Sans TC', sans-serif;
+            height: 720px;
+            justify-content: flex-start;
+            overflow: hidden;
+            padding: 60px;
+            position: relative;
+            width: 1280px;
+        }
+
+        /* 1.1 BACKGROUND STYLING (Glowing Abstract Blobs) */
+        .slide-container::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(222, 255, 154, 0.06) 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .slide-container::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(218, 255, 222, 0.05) 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .slide-container > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 2. CONSISTENT TYPOGRAPHY */
+        .slide-container h1,
+        .slide-container h2,
+        .slide-container h3,
+        .slide-container h4 {
+            color: #f5f5f5;
+            font-weight: 700;
+            font-family: 'Urbanist', 'Noto Sans TC', sans-serif;
+            margin: 0;
+        }
+
+        .slide-container h1 span,
+        .slide-container h2 span {
+            color: #deff9a; /* Lime Green Accent */
+        }
+
+        .slide-container p,
+        .slide-container .subtitle,
+        .slide-container li {
+            color: #daffde; /* Mint Green Muted */
+            font-family: 'Urbanist', 'Noto Sans TC', sans-serif;
+        }
+
+        .slide-container h1 {
+            font-size: 80px;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .slide-container .slide-title {
+            font-size: 55px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            text-align: left;
+            width: 100%;
+            line-height: 1.2;
+            flex-shrink: 0;
+        }
+
+        .slide-container h3 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .slide-container p,
+        .slide-container li {
+            font-size: 20px;
+            font-weight: 400;
+            line-height: 1.6;
+        }
+
+        .slide-container .subtitle {
+            font-size: 24px;
+            font-weight: 400;
+            line-height: 1.4;
+            margin: 20px auto 0;
+            color: #a3a3a3;
+        }
+
+        .content-area {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            width: 100%;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        /* 3. LAYOUT DEFINITIONS */
+        
+        /* Title Layout */
+        .title-layout {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 100%;
+            width: 100%;
+        }
+
+        /* Two Column Layout (General) */
+        .two-column {
+            display: flex;
+            gap: 60px;
+            width: 100%;
+            height: 100%;
+            align-items: center;
+        }
+
+        .two-column > div {
+            flex: 1;
+        }
+
+        /* Image Containers for standard layouts */
+        .two-column .image-container {
+            height: 460px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .two-column .image-container img {
+            border-radius: 24px;
+            height: 100%;
+            width: 100%;
+            object-fit: contain; /* Contain as per strict guidelines */
+            border: 1px solid #333;
+            background-color: #111;
+        }
+
+        /* Bullet Lists */
+        .bullet-list {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .bullet-list ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .bullet-list li {
+            margin-bottom: 25px;
+            padding-left: 45px;
+            position: relative;
+        }
+
+        .bullet-list i {
+            color: #deff9a;
+            font-size: 24px;
+            left: 0;
+            position: absolute;
+            top: 4px;
+        }
+
+        .bullet-list li strong {
+            color: #fff;
+            font-weight: 700;
+            font-size: 24px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .bullet-list.large-bullets li {
+            margin-bottom: 40px;
+            padding-left: 70px;
+        }
+
+        .bullet-list.large-bullets i {
+            font-size: 40px;
+            top: 5px;
+        }
+
+        /* Tiled Content (Icons) */
+        .tiled-content {
+            align-items: stretch;
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .tile {
+            background-color: #121212;
+            border-radius: 24px;
+            border: 1px solid #2a2a2a;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            padding: 40px 30px;
+            text-align: center;
+            transition: border-color 0.3s ease;
+        }
+
+        .tile:hover {
+            border-color: #deff9a;
+        }
+
+        .tile .icon {
+            color: #deff9a;
+            font-size: 50px;
+            margin-bottom: 25px;
+        }
+
+        .tile h3 {
+            color: #fff;
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        /* Two Column Tiled Text */
+        .slide-container.two-column-tiled-layout .content-area {
+            display: flex;
+            flex-grow: 1;
+        }
+
+        .two-column.tiled {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: stretch;
+            width: 100%;
+        }
+
+        .two-column.tiled > div {
+            background-color: #121212;
+            border-radius: 24px;
+            border: 1px solid #2a2a2a;
+            padding: 45px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .two-column.tiled h3 {
+            color: #deff9a;
+            font-size: 36px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Bleed Image Right Layout */
+        .slide-container.bleed-image-layout {
+            align-items: start;
+            display: grid;
+            gap: 50px;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            padding: 0;
+        }
+
+        .slide-container.bleed-image-layout > .content-container {
+            padding: 60px 0 60px 60px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .slide-container.bleed-image-layout > .image-container {
+            height: 100%;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .slide-container.bleed-image-layout img.bleed-image-side {
+            border-radius: 0;
+            display: block;
+            height: 720px;
+            object-fit: cover;
+            object-position: center;
+            width: 100%;
+        }
+
+        .slide-container.bleed-image-layout .bleed-text-side p {
+            margin-bottom: 25px;
+            font-size: 22px;
+            line-height: 1.6;
+        }
+
+        .slide-container.bleed-image-layout .bleed-text-side strong {
+            color: #deff9a;
+            font-size: 24px;
+        }
+
+        /* Q&A Layout */
+        .qa-layout {
+            margin: 0 auto;
+            text-align: center;
+            width: 100%;
+            align-self: center;
+        }
+
+        .qa-layout h2 {
+            font-size: 90px;
+            margin-bottom: 20px;
+        }
+
+        .qa-layout p {
+            font-size: 28px;
+            color: #daffde;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Slide 1: Title_Slide -->
+<div class="slide-container" id="slide1">
+    <div class="title-layout">
+        <h1>加密貨幣 <span>基礎</span></h1>
+        <p class="subtitle">認識比特幣、區塊鏈、錢包與交易所</p>
+    </div>
+</div>
+
+<!-- Slide 2: Image_Right_Text_Left (Satoshi & Bitcoin Origins) -->
+<div class="slide-container" id="slide2">
+    <h2 class="slide-title">中本聰為何創造 <span>比特幣</span>？</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div class="content-container">
+                <div class="bullet-list">
+                    <ul>
+                        <li><i class="fa-solid fa-building-columns"></i> <strong>2008 年金融海嘯</strong><br>作為對全球銀行紓困和傳統金融體系系統性缺陷的直接回應而推出。</li>
+                        <li><i class="fa-solid fa-network-wired"></i> <strong>去中心化</strong><br>旨在成為一個完全點對點的電子現金系統，無需信任中央第三方機構即可運作。</li>
+                        <li><i class="fa-solid fa-shield-halved"></i> <strong>抗審查性</strong><br>確保沒有任何政府或企業可以任意凍結帳戶或阻止有效的交易。</li>
+                        <li><i class="fa-solid fa-chart-line"></i> <strong>固定供應量</strong><br>作為一種抗通膨資產，透過數學強制規定了 2,100 萬枚的硬性上限。</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="image-container">
+                <img src="http://googleusercontent.com/image_collection/image_retrieval/11557669966410367315" alt="代表區塊鏈和比特幣的點對點網路節點的未來數位視覺化">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 3: Tiled_Text_With_Icons (What is Blockchain) -->
+<div class="slide-container" id="slide3">
+    <h2 class="slide-title">什麼是 <span>區塊鏈</span>？</h2>
+    <div class="content-area">
+        <div class="tiled-content">
+            <div class="tile">
+                <div class="icon"><i class="fa-solid fa-globe"></i></div>
+                <h3>分散式帳本</h3>
+                <p>一個公開、去中心化的資料庫，在全球數千個電腦節點之間持續同步和共享，確保沒有單點故障。</p>
+            </div>
+            <div class="tile">
+                <div class="icon"><i class="fa-solid fa-link"></i></div>
+                <h3>不可篡改性</h3>
+                <p>資料受到密碼學保護並連結成連續的「區塊」。一旦記錄了交易，在數學上就幾乎不可能更改或刪除。</p>
+            </div>
+            <div class="tile">
+                <div class="icon"><i class="fa-solid fa-users-cog"></i></div>
+                <h3>共識機制</h3>
+                <p>網路參與者（礦工或驗證者）使用演算法自動就交易的有效性達成一致，無需中央權威機構介入。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 4: Two_Column_Tiled_Text (BTC vs ETH) -->
+<div class="slide-container two-column-tiled-layout" id="slide4">
+    <h2 class="slide-title"><span>比特幣</span> vs. <span>以太坊</span></h2>
+    <div class="content-area">
+        <div class="two-column tiled">
+            <div>
+                <h3><i class="fa-brands fa-bitcoin" style="margin-right:15px; color:#f7931a;"></i> 比特幣 (BTC)</h3>
+                <p>常被稱為<strong>「數位黃金」</strong>，比特幣是第一代區塊鏈，主要作為去中心化的價值儲存和交易媒介。</p>
+                <p>它的特點是嚴格限制 2,100 萬枚的供應量，使其成為一種抗通膨資產，深受長期持有和資產保值者的青睞。</p>
+            </div>
+            <div>
+                <h3><i class="fa-brands fa-ethereum" style="margin-right:15px; color:#627eea;"></i> 以太坊 (ETH)</h3>
+                <p>被設計為<strong>「世界電腦」</strong>，以太坊是具備可編程智能合約的第二代區塊鏈。</p>
+                <p>它是驅動整個去中心化金融 (DeFi) 協議、非同質化代幣 (NFT) 和自訂去中心化應用程式 (dApp) 生態系統的基礎層。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 5: Bleed_Image_Right (Hot vs Cold Wallets Overview) -->
+<div class="slide-container bleed-image-layout" id="slide5">
+    <div class="content-container">
+        <h2 class="slide-title"><span>熱錢包</span> vs <span>冷錢包</span></h2>
+        <div class="bleed-text-side">
+            <p>加密貨幣錢包安全地儲存<strong>私鑰</strong>，證明您對區塊鏈上數位資產的所有權。</p>
+            <p><strong>熱錢包</strong>連接到網際網路。它們為日常交易、活躍交易和與 Web3 應用程式互動提供極大的便利，但也更容易受到網路威脅。</p>
+            <p><strong>冷錢包</strong>是完全離線的實體裝置。透過將您的私鑰與基於網路的駭客攻擊隔離，它們為長期儲存提供了最高級別、機構級的安全性。</p>
+        </div>
+    </div>
+    <div class="image-container">
+        <img class="bleed-image-side" src="http://googleusercontent.com/image_collection/image_retrieval/18438675991662053209" alt="代表加密錢包和安全性的高科技發光掛鎖或數位金庫">
+    </div>
+</div>
+
+<!-- Slide 6: Styled_Bullet_Points (Wallet Ecosystem Examples) -->
+<div class="slide-container" id="slide6">
+    <h2 class="slide-title">錢包 <span>生態系統</span></h2>
+    <div class="content-area">
+        <div class="bullet-list large-bullets">
+            <ul>
+                <li>
+                    <i class="fa-solid fa-fire" style="color:#ff6b6b;"></i>
+                    <strong>熱錢包 (軟體)</strong>
+                    這些是安裝在瀏覽器或手機上的應用程式。因為它們始終在線，所以最適合存放用於活躍交易的較小金額。<br><br>
+                    <span style="color:#f5f5f5;">主要提供者：</span> Proton Wallet, Electrum Bitcoin Wallet, MetaMask, Rabby, 和 Phantom。
+                </li>
+                <li>
+                    <i class="fa-solid fa-snowflake" style="color:#74c0fc;"></i>
+                    <strong>冷錢包 (硬體)</strong>
+                    這些是類似 USB 的加密裝置，需要按下實體按鈕才能批准交易。它們是保護大量資產的黃金標準。<br><br>
+                    <span style="color:#f5f5f5;">主要提供者：</span> Ledger, Trezor, 和 OneKey。
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 7: Two_Column_Tiled_Text (CEX vs DEX) -->
+<div class="slide-container two-column-tiled-layout" id="slide7">
+    <h2 class="slide-title"><span>CEX</span> vs. <span>DEX</span></h2>
+    <div class="content-area">
+        <div class="two-column tiled">
+            <div>
+                <h3>中心化交易所 (CEX)</h3>
+                <p>由企業實體（例如：幣安 Binance、Coinbase）營運。他們託管您的資金並充當您交易的中間人。</p>
+                <div class="bullet-list" style="margin-top:25px;">
+                    <ul>
+                        <li><i class="fa-solid fa-check" style="font-size:18px;"></i> 高流動性和閃電般的交易速度</li>
+                        <li><i class="fa-solid fa-check" style="font-size:18px;"></i> 適合初學者的使用者友善介面</li>
+                        <li><i class="fa-solid fa-check" style="font-size:18px;"></i> 需要身分驗證 (KYC)</li>
+                        <li><i class="fa-solid fa-triangle-exclamation" style="font-size:18px; color:#ff6b6b;"></i> 託管型：「沒有私鑰，就不是你的幣」</li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <h3>去中心化交易所 (DEX)</h3>
+                <p>完全由區塊鏈上的智能合約營運（例如：Uniswap、Curve）。您可以直接從自己的錢包進行點對點交易。</p>
+                <div class="bullet-list" style="margin-top:25px;">
+                    <ul>
+                        <li><i class="fa-solid fa-check" style="font-size:18px;"></i> 非託管型（您完全擁有自己的私鑰）</li>
+                        <li><i class="fa-solid fa-check" style="font-size:18px;"></i> 全球範圍內的無許可交易</li>
+                        <li><i class="fa-solid fa-check" style="font-size:18px;"></i> 不需要身分驗證（匿名）</li>
+                        <li><i class="fa-solid fa-triangle-exclamation" style="font-size:18px; color:#ff6b6b;"></i> 您需要全權負責自己的安全</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 8: Image_Right_Text_Left (On/Off Ramps) -->
+<div class="slide-container" id="slide8">
+    <h2 class="slide-title"><span>入金 (On-Ramps)</span> 與 出金 (Off-Ramps)</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div class="content-container">
+                <div class="bullet-list">
+                    <ul>
+                        <li><i class="fa-solid fa-arrow-right-to-bracket"></i> <strong>法幣入金 (法幣 → 加密貨幣)</strong><br>讓您能使用傳統貨幣購買加密貨幣的平台和橋樑。這通常透過中心化交易所上的信用卡、銀行轉帳或 Apple Pay 來完成。</li>
+                        <li><i class="fa-solid fa-arrow-right-from-bracket"></i> <strong>法幣出金 (加密貨幣 → 法幣)</strong><br>相反的過程。這些是將您的加密貨幣資產出售，並將傳統當地貨幣提取回標準銀行帳戶的管道。</li>
+                        <li><i class="fa-solid fa-bridge"></i> <strong>金融橋樑</strong><br>入金與出金管道是連接受嚴格監管的傳統金融體系與無國界、去中心化 Web3 生態系統的關鍵基礎設施。</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="image-container">
+                <img src="http://googleusercontent.com/image_collection/image_retrieval/9073899554666654524" alt="連接傳統實體法幣與發光數位加密世界的數位橋樑">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 9: Q&A -->
+<div class="slide-container" id="slide9">
+    <div class="content-area" style="align-items: center;">
+        <div class="qa-layout">
+            <h2>有任何 <span>問題</span> 嗎？</h2>
+            <p>準備好開始您的去中心化之旅了嗎？</p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+```
